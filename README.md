@@ -15,15 +15,15 @@ From console please run:
 	19.34
 	3.11
 	16.61
-	
+
 ## How do I change the rules ?
 
 In reevoo's file:
 
-	fr_rule = lambda { |quantity, price| (quantity / 2) * price }
-	sr_rule = lambda { |quantity, price| (quantity >= 3 ? quantity * 0.5 : 0) }
-	my_new_rule = lambda { |quantity, price| # do something here }
-	
+	fr_rule 		= ->(quantity, price) { (quantity / 2) * price }
+	sr_rule 		= ->(quantity, price) { (quantity >= 3 ? quantity * 0.5 : 0) }
+	my_new_rule = ->(quantity, price) { # do something here }
+
 Simply define / update rules using `lambda`.
 
 * `quantity` is the quantity of the item represented by the rule in the checkout object (already in the cart)
@@ -40,7 +40,7 @@ Push rules into an array like so:
 Then passe the array when creating a new checkout:
 
 	Checkout.new(rules)
-	
+
 When you'll call `total` on `checkout` instance, it will apply each rules automaticaly.
 
 ## Specs
@@ -56,7 +56,14 @@ You can launch the specs with:
 
 I notice an error in the test data provided:
 
-	Basket: FR1, SR1, FR1, CF1	Total price expected: £22.25
-Should be:
-	Basket: FR1, SR1, FR1, CF1	Total price expected: £19.34
-Since:* Rule: *buy-one-get-one-free offers and of fruit tea** 3.11 + 5.00 + ~~3.11~~ + 11.23 = 19.34I choose to fully respect the rules given since in real life, an error could appear in the given specifications.
+	Basket: FR1, SR1, FR1, CF1
+	Total price expected: £22.25
+Should be:
+	Basket: FR1, SR1, FR1, CF1
+	Total price expected: £19.34
+Since:
+
+* Rule: *buy-one-get-one-free offers and of fruit tea*
+* 3.11 + 5.00 + ~~3.11~~ + 11.23 = 19.34
+
+I choose to fully respect the rules given since in real life, an error could appear in the given specifications.

@@ -19,12 +19,7 @@ rules = []
 rules << Rule.new(fr, fr_rule)
 rules << Rule.new(sr, sr_rule)
 
-# Instantiate Checkout Class
 co1 = Checkout.new(rules)
-co2 = Checkout.new(rules)
-co3 = Checkout.new(rules)
-
-# Scan items
 co1.scan(fr)
 co1.scan(sr)
 co1.scan(fr)
@@ -33,12 +28,14 @@ puts co1.total
 
 # ======================
 
+co2 = Checkout.new(rules)
 co2.scan(fr)
 co2.scan(fr)
 puts co2.total
 
 # ======================
 
+co3 = Checkout.new(rules)
 co3.scan(sr)
 co3.scan(sr)
 co3.scan(fr)

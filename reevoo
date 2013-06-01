@@ -1,0 +1,46 @@
+#!/usr/bin/env ruby
+
+require './lib/checkout'
+require './lib/item'
+require './lib/rule'
+
+# Instantiate Item Class
+fr = Item.new(:fr1, 'Fruit tea', 3.11)
+sr = Item.new(:sr1, 'Strawberries', 5.00)
+cf = Item.new(:cf1, 'Coffee', 11.23)
+
+# Build rules using lambda.
+# This is where you can change the rules.
+fr_rule = lambda { |quantity, price| (quantity / 2) * price }
+sr_rule = lambda { |quantity, price| (quantity >= 3 ? quantity * 0.5 : 0) }
+
+# Instantiate Rule Class
+rules = []
+rules << Rule.new(fr, fr_rule)
+rules << Rule.new(sr, sr_rule)
+
+# Instantiate Checkout Class
+co1 = Checkout.new(rules)
+co2 = Checkout.new(rules)
+co3 = Checkout.new(rules)
+
+# Scan items
+co1.scan(fr)
+co1.scan(sr)
+co1.scan(fr)
+co1.scan(cf)
+puts co1.total
+
+# ======================
+
+co2.scan(fr)
+co2.scan(fr)
+puts co2.total
+
+# ======================
+
+co3.scan(sr)
+co3.scan(sr)
+co3.scan(fr)
+co3.scan(sr)
+puts co3.total
